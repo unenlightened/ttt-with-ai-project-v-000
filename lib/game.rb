@@ -77,7 +77,7 @@ class Game
     puts "Would you like to play again? (Y/n)"
     input = gets.strip.downcase
     replay unless ["y","n"].include?(input)
-    start unless input == "n"
+    input == "y" ? start : exit
   end
 
   def start
