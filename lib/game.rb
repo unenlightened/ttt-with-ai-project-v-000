@@ -58,7 +58,7 @@ class Game
       turn
     else
       board.update(move, current_player)
-      board.display
+      board.display unless self.war
     end
   end
 
