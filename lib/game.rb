@@ -73,7 +73,7 @@ class Game
     replay   # breaks the 04_game_spec test if it's not removed
   end
 
-  def replay                   
+  def replay
     puts "Would you like to play again? (Y/n)"
     input = gets.strip.downcase
     replay unless ["y","n"].include?(input)
