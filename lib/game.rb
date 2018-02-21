@@ -106,6 +106,7 @@ class Game
     draws = Game.results.count(nil)
 
     x_wins = "no" if x_wins = 0
+    o_wins = "no" if o_wins = 0
 
     puts "There were #{x_wins} \"X\" wins, #{o_wins} \"O\" wins, and #{draws} draws out of #{Game.results.length} game(s)."
     replay
