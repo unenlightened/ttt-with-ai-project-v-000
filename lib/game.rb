@@ -1,6 +1,6 @@
 class Game
   attr_accessor :board, :player_1, :player_2
-  attr_reader :players, :start_player, :war
+  attr_reader :players, :start_player
 
   WIN_COMBINATIONS = [
     [2,5,8],
@@ -16,6 +16,10 @@ class Game
 
   def self.results
      @@results
+  end
+
+  delf self.war
+    @@war
   end
 
   def initialize(p1 = Players::Human.new("X"), p2 = Players::Human.new("O"), board = Board.new)
