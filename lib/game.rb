@@ -84,7 +84,7 @@ class Game
     puts "What kind of game would you like to play? (0/1/2)-player"    # /s can be converted to 0 with to_i
     @players = gets.strip
     wargames if players == "wargames"
-    start unless ["0", "1", "2", "wargames"].include?(players)
+    start unless ["0", "1", "2"].include?(players)
     player_names
     starting_player
     game_setup
