@@ -66,9 +66,7 @@ class Game
     board.display
     turn until over?
     puts winner ? "Congratulations #{winner}!" : "Cat's Game!"
-    save
-    war ? wargames : save
-        # breaks the 04_game_spec test if it's not removed
+    replay
   end
 
   def save
