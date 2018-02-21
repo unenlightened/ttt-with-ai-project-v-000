@@ -18,7 +18,11 @@ class Game
      @@results
   end
 
-  delf self.war
+  def save
+    Game.results << winner
+  end
+
+  def self.war
     @@war
   end
 
@@ -58,7 +62,7 @@ class Game
       turn
     else
       board.update(move, current_player)
-      board.display unless Game.war
+      board.display if !Game.war
     end
   end
 
@@ -66,14 +70,10 @@ class Game
     board.display
     turn until over?
     puts winner ? "Congratulations #{winner}!" : "Cat's Game!"
-    replay
+    replay   # breaks the 04_game_spec test if it's not removed
   end
 
-  def save
-    Game.results << winner
-  end
-
-  def replay
+  def replay                   
     puts "Would you like to play again? (Y/n)"
     input = gets.strip.downcase
     replay unless ["y","n"].include?(input)
@@ -91,15 +91,22 @@ class Game
     game_setup
   end
 
+  def war_play
+    turn until over?
+    save
+  end
+
   def wargames
     @@war = true
 
-    Game.new(Players::Computer.new("X"), p2 = Players::Computer.new("O")).play until Game.results.length == 100
+    Game.new(Players::Computer.new("X"), p2 = Players::Computer.new("O")).war_play until Game.results.length == 100
 
     x_wins = Game.results.count("X")
     o_wins = Game.results.count("O")
     draws = Game.results.count(nil)
+
     puts "There were #{x_wins} \"X\" wins, #{o_wins} \"O\" wins, and #{draws} draws out of #{Game.results.length} game(s)."
+    replay
   end
 
   def player_names
@@ -137,15 +144,7 @@ class Game
       p2 = Players::Human.new("O")
     end
 
-   if start_player == 1
-     p1.name = player_names[0]
-     p2.name = player_names[1]
-   else
-     p1.name = player_names[1]
-     p2.name = player_names[0]
-   end
-
-    puts "#{p1.name} is starting against #{p2.name}."
+    puts start_player == 1 ? "#{player_names[0]} is starting against #{player_names[1]}." : "#{player_names[1]} is starting against #{player_names[0]}."
     Game.new(p1, p2).play
   end
 end
