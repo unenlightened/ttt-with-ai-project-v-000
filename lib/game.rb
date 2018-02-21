@@ -1,6 +1,6 @@
 class Game
   attr_accessor :board, :player_1, :player_2
-  attr_reader :players, :start_player
+  attr_reader :players, :start_player, :war
 
   WIN_COMBINATIONS = [
     [2,5,8],
@@ -11,6 +11,12 @@ class Game
     [1,4,7],
     [0,4,8],
     [6,4,2]]
+
+  @@results = []
+
+  def self.results
+     @@results
+  end
 
   def initialize(p1 = Players::Human.new("X"), p2 = Players::Human.new("O"), board = Board.new)
     @board = board
@@ -56,7 +62,13 @@ class Game
     board.display
     turn until over?
     puts winner ? "Congratulations #{winner}!" : "Cat's Game!"
-    replay  # breaks the 04_game_spec test if it's not removed
+    save
+    war ? wargames : save
+        # breaks the 04_game_spec test if it's not removed
+  end
+
+  def save
+    Game.results << winner
   end
 
   def replay
@@ -69,11 +81,22 @@ class Game
   def start
     puts "What kind of game would you like to play? (0/1/2)-player"    # /s can be converted to 0 with to_i
     @players = gets.strip
-    start unless ["0", "1", "2"].include?(players)
-
+    wargames if players == "wargames"
+    start unless ["0", "1", "2", "wargames"].include?(players)
     player_names
     starting_player
     game_setup
+  end
+
+  def wargames
+    @war = true
+
+    Game.new(Players::Computer.new("X"), p2 = Players::Computer.new("O")).play until Game.results.length == 5
+
+    x_wins = Game.results.count("X")
+    o_wins = Game.results.count("O")
+    draws = Game.results.count(nil)
+    puts "There were #{x_wins} \"X\" wins, #{o_wins} \"O\" wins, and #{draws} draws out of #{Game.results.length} game(s)."
   end
 
   def player_names
