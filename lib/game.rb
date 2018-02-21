@@ -94,7 +94,7 @@ class Game
   def wargames
     @@war = true
 
-    Game.new(Players::Computer.new("X"), p2 = Players::Computer.new("O")).play until Game.results.length == 5
+    Game.new(Players::Computer.new("X"), p2 = Players::Computer.new("O")).play until Game.results.length == 100
 
     x_wins = Game.results.count("X")
     o_wins = Game.results.count("O")
