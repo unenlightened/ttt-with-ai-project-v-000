@@ -91,7 +91,7 @@ class Game
   end
 
   def wargames
-    @war = true
+    @@war = true
 
     Game.new(Players::Computer.new("X"), p2 = Players::Computer.new("O")).play until Game.results.length == 5
 
