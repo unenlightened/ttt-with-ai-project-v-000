@@ -105,7 +105,7 @@ class Game
     o_wins = Game.results.count("O")
     draws = Game.results.count(nil)
 
-    puts "There were #{x_wins} \"X\" wins, #{o_wins} \"O\" wins, and #{draws} draws out of #{Game.results.length} game(s)."
+    puts x_wins || o_wins ? "There were #{x_wins} \"X\" wins, #{o_wins} \"O\" wins, and #{draws} draws out of #{Game.results.length} game(s)." : "There were #{draws} draws out of #{Game.results.length} game(s)."
     replay
   end
 
